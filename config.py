@@ -1,0 +1,1 @@
+RECIPES_PATH = "O:/recipe_recommendation/food-dataset-en.csv"
