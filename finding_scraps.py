@@ -401,8 +401,6 @@ def ingredient_parser(ingreds):
         "from sustrainable sources"
     ]
 
-    ingreds = strToList(ingreds)
-
     if isinstance(ingreds, list):
         ingredients = ingreds
     else:
@@ -431,6 +429,9 @@ def ingredient_parser(ingreds):
 
 if __name__ == "__main__":
     recipe_df = pd.read_csv(config.RECIPES_PATH)
+    recipe_df["ingredient"] = recipe_df["ingredient"].apply(
+         lambda x: strToList(x)
+    )
     recipe_df["ingredients_parsed"] = recipe_df["ingredient"].apply(
         lambda x: ingredient_parser(x)
     )
