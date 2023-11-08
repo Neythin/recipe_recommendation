@@ -404,6 +404,7 @@ def ingredient_parser(ingreds):
     if isinstance(ingreds, list):
         ingredients = ingreds
     else:
+        ingreds = strToList(ingreds)
         ingredients = ast.literal_eval(ingreds)
 
     translator = str.maketrans('', '', string.punctuation)
@@ -429,9 +430,6 @@ def ingredient_parser(ingreds):
 
 if __name__ == "__main__":
     recipe_df = pd.read_csv(config.RECIPES_PATH)
-    recipe_df["ingredient"] = recipe_df["ingredient"].apply(
-         lambda x: strToList(x)
-    )
     recipe_df["ingredients_parsed"] = recipe_df["ingredient"].apply(
         lambda x: ingredient_parser(x)
     )
