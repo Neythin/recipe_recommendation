@@ -413,7 +413,7 @@ def ingredient_parser(ingreds):
     ingred_list = []
 
     for i in ingredients:
-        i.translate(translator)
+        i = i.translate(translator)
         items = re.split(" |-", i)
         items = [word for word in items if word.isalpha()]
         items = [word.lower() for word in items]
@@ -423,7 +423,7 @@ def ingredient_parser(ingreds):
         items = [word for word in items if word not in words_to_remove]
 
         if items:
-            ingred_list.append("".join(items))
+            ingred_list.append(" ".join(items))
             
     return ingred_list
 
@@ -436,3 +436,4 @@ if __name__ == "__main__":
     )
     df = recipe_df[["name", "ingredients_parsed", "ingredient", "link"]]
     df = recipe_df.dropna()
+
