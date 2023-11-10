@@ -4,10 +4,10 @@ import numpy as np
 
 import os
 import config
-import nltk
 from finding_scraps import *
 from rec_sys import *
 from recipe_word2vec import *
+import nltk
 
 try:
     nltk.data.find('corpora/wordnet')
