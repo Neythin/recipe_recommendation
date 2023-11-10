@@ -24,30 +24,12 @@ def make_clickable(name, link):
 
 def main():
     st.title("Scraps.")
-
-    """
-    ingredients = st.text_input(
-        "Enter your ingredients:",
-        "Milk, eggs, cheese"
-    )
-
-    execute_recsys = st.button("Make a meal")
-
-    if execute_recsys:
-
-        recipe = get_recs(ingredients, mean=True)
-        recipe["url"] = recipe.apply(
-            lambda row: make_clickable(row["recipe"], row["url"], axis=1)
-        )
-        recipe_display = recipe[["recipe", "url", "ingredients"]]
-    """
-
+    st.markdown("")
     st.text_input(
         "Enter your ingredients:",
         "Milk, eggs, cheese"
     )
     st.button("Make a meal")
-    
 
 
 
