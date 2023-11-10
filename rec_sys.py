@@ -8,8 +8,11 @@ import config
 import unidecode
 import ast
 
+# Get N recommendations based on score
 def get_recommendations(N, scores):
     df_recipes = pd.read_csv(config.PARSED_PATH)
+    
+    # 
     top = sorted(range(len(scores)), key = lambda i: scores[i], reverse = True)[:N]
     recommendation = pd.DataFrame(columns = ['recipe', 'ingredients', 'score', 'url'])
     count = 0

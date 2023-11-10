@@ -14,49 +14,19 @@ from collections import defaultdict
 
 import config
 from finding_scraps import *
+from rec_sys import *
 
 
 
 def get_and_sort_corpus(data):
     corpus_sorted = []
 
-    for doc in data.parsed.values:
+    # for each list of ingredients, sort the ingredients by ascending order and add it to the new list
+    for doc in data.parsed_new.values:
         doc.sort()
         corpus_sorted.append(doc)
     
     return corpus_sorted
-
-def get_recommendations(N, scores):
-    df_recipes = pd.read_csv(config.PARSED_PATH)
-    top = sorted(range(len(scores)), key = lambda i: scores[i], reverse = True)[:N]
-    recommendation = pd.DataFrame(columns = ['recipe', 'ingredients', 'score', 'url'])
-    count = 0
-    for i in top:
-        recommendation.at[count, 'recipe'] = title_parser(df_recipes['name'][i])
-        recommendation.at[count, 'ingredients'] = ingredient_parser_final(
-            df_recipes['ingredient'][i]
-        )
-        recommendation.at[count, 'url'] = df_recipes['link'][i]
-        recommendation.at[count, 'score'] = f"{scores[i]}"
-        count += 1
-    return recommendation
-
-def title_parser(title):
-    title = unidecode.unidecode(title)
-    return title
-
-def ingredient_parser_final(ingredient):
-
-    if isinstance(ingredient, list):
-        ingredients = ingredient
-    else:
-        ingredient = strToList(ingredient)
-        ingredients = ast.literal_eval(ingredient)
-
-    ingredients = ",".join(ingredients)
-    ingredients = unidecode.unidecode(ingredients)
-
-    return ingredients
 
 class MeanEmbeddingVectorizer(object):
     def __init__(self, word_model):

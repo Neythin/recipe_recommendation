@@ -10,10 +10,12 @@ from nltk.corpus import wordnet
 from collections import Counter
 import config
 
+# Given a string of ingredients, split where there is a comma
 def strToList(ingreds):
         ingreds = ingreds.split(", ")
         return str(ingreds)
 
+# Return a list of ingredients, remove any unnecessary words to help with similarity later on
 def ingredient_parser(ingreds):
 
     measures = [
@@ -401,26 +403,30 @@ def ingredient_parser(ingreds):
         "from sustrainable sources"
     ]
 
+    # Ensure that the input ingredients are in the form of a list
     if isinstance(ingreds, list):
         ingredients = ingreds
     else:
         ingreds = strToList(ingreds)
         ingredients = ast.literal_eval(ingreds)
 
+    # Remove punctuation and lemmatize words
     translator = str.maketrans('', '', string.punctuation)
     lemmatizer = WordNetLemmatizer()
     ingred_list = []
 
+    # For each item in the ingredients list
     for i in ingredients:
-        i = i.translate(translator)
-        items = re.split(" |-", i)
-        items = [word for word in items if word.isalpha()]
-        items = [word.lower() for word in items]
-        items = [unidecode.unidecode(word) for word in items]
-        items = [lemmatizer.lemmatize(word) for word in items]
-        items = [word for word in items if word not in measures]
-        items = [word for word in items if word not in words_to_remove]
+        i = i.translate(translator) # Remove punctuation
+        items = re.split(" |-", i) # Split each element if they contain a space or a hyphen
+        items = [word for word in items if word.isalpha()] # Only take English words
+        items = [word.lower() for word in items] # Make all words lower case
+        items = [unidecode.unidecode(word) for word in items] # Remove any accent marks
+        items = [lemmatizer.lemmatize(word) for word in items] # Lemmatize words (Break down into a real base word)
+        items = [word for word in items if word not in measures] # Remove any measurement words
+        items = [word for word in items if word not in words_to_remove] # Remove any unnecessary words
 
+        # for all items, put into a list as a string now that they're separated
         if items:
             ingred_list.append(" ".join(items))
             
