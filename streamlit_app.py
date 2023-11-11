@@ -16,20 +16,29 @@ except:
 
 
 
-def make_clickable(name, link):
-    text = name
-    return f'<a target="_blank" href="{link}">{text}</a>'
-
-
-
 def main():
-    st.title("Scraps.")
-    st.markdown("")
-    st.text_input(
-        "Enter your ingredients:",
+    st.image("images/chef.png")
+    st.markdown("## Welcome to Scraps!")
+    st.write(
+    "Discover delicious recipes tailored just for you! Whether you're looking to use up leftovers, reduce food waste, "
+    "or simply find new culinary inspirations, Scraps is here to help. Our app is designed to provide personalized recipe "
+    "recommendations based on the ingredients you have on hand.")
+    ingred_input = st.text_input(
+        "Enter your ingredients (separate by commas):",
         "Milk, eggs, cheese"
     )
-    st.button("Make a meal")
+    exec_rec = st.button("Let's make a meal!")
+
+    if exec_rec:
+
+        col1, col2, col3 = st.columns([1, 6, 1])
+        with col2:
+            loading_gif = st.image("images/stickman.gif")
+        recipe = get_recs(ingred_input, mean=True)
+        loading_gif.empty()
+        recipe_display = recipe[["recipe", "url"]]
+
+        st.write(recipe_display, unsafe_allow_html=True)
 
 
 
