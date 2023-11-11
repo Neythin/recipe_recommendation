@@ -22,7 +22,7 @@ def get_and_sort_corpus(data):
     corpus_sorted = []
 
     # for each list of ingredients, sort the ingredients by ascending order and add it to the new list
-    for doc in data.parsed_new.values:
+    for doc in data.parsed.values:
         doc.sort()
         corpus_sorted.append(doc)
     
