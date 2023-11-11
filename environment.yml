@@ -39,3 +39,5 @@ dependencies:
   - xz=5.4.2=h8cc25b3_0
   - zlib=1.2.13=h8cc25b3_0
   - nltk
+  - gensim
+  - sklearn
